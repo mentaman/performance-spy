@@ -1,11 +1,12 @@
-import { getCurrentReset } from "bundles/main/spy-performance/summary/reset-counter";
+import { getCurrentReset } from "../summary/reset-counter";
+import { PerfStatsStuff } from "../performance-timer";
 
 export const spyFunctionTime = (
-  myfunc,
-  perfstat,
-  key,
-  { beforeResultsChecker = null, resultsChecker = null, checkArgs = false, keepFuncRefs = {} } = {}
-) => {
+  myfunc: any,
+  perfstat: PerfStatsStuff,
+  key: string,
+  { beforeResultsChecker = null, resultsChecker = null, checkArgs = false, keepFuncRefs = {} }: any = {}
+): any => {
   return function () {
     if (keepFuncRefs.lastReset && getCurrentReset() > keepFuncRefs.lastReset) {
       keepFuncRefs.count = undefined;

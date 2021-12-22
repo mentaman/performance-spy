@@ -1,4 +1,6 @@
 
+import * as path from "path";
+
 export function spyJestAliases(jest, aliases) {
     const finalAliases = {};
     const supported = new Set(["redux-thunk", "reselect", "re-reselect"])

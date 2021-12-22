@@ -1,8 +1,8 @@
-import { spyFunctionTime } from "bundles/main/spy-performance/spy-functions/spy-function-time";
-import { dispatchPerfStat } from "bundles/main/spy-performance/summary/summaries";
+import { dispatchPerfStat } from "../summary/summaries";
+import { spyFunctionTime } from "./spy-function-time";
 
-const spyThunk = function () {
-  function createThunkMiddleware(extraArgument) {
+export const spyThunk = function () {
+  function createThunkMiddleware(extraArgument = undefined) {
     return ({ dispatch, getState }) =>
       next =>
       action => {
@@ -17,8 +17,7 @@ const spyThunk = function () {
       };
   }
 
-  const thunk = createThunkMiddleware();
+  const thunk: any = createThunkMiddleware();
   thunk.withExtraArgument = createThunkMiddleware;
   return thunk;
 };
-window.spyThunk = spyThunk;

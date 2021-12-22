@@ -1,5 +1,5 @@
-import { spyFunctionTime } from "bundles/main/spy-performance/spy-functions/spy-function-time";
-import { combinerPerfStat, selectorsPerfStat } from "bundles/main/spy-performance/summary/summaries";
+import { combinerPerfStat, selectorsPerfStat } from "../summary/summaries";
+import { spyFunctionTime } from "./spy-function-time";
 
 let currentSelectorKey = null;
 let currentCacheSelectorKey = null;

@@ -1,22 +1,21 @@
-import { getCustomTimers, resetCustomTimers } from "bundles/main/spy-performance/custom-timer/custom-timer";
+import { getCustomTimers, resetCustomTimers } from "../custom-timer/custom-timer";
 import {
   allPerfStats,
   combinerPerfStat,
   dispatchPerfStat,
   selectorsPerfStat
-} from "bundles/main/spy-performance/summary/summaries";
-import { resetCountUpdate } from "bundles/main/spy-performance/summary/reset-counter";
+} from "../summary/summaries";
+import { resetCountUpdate } from "../summary/reset-counter";
 
-const perfStatsReset = function () {
+export const perfStatsReset = function () {
   resetCustomTimers();
   resetCountUpdate();
   for (const perfStat of allPerfStats) {
     perfStat.reset();
   }
 };
-window.perfStatsReset = perfStatsReset;
 
-const printPerfSummary = function () {
+export const printPerfSummary = function () {
   console.log("longest selectors");
   const longestSelectors = Object.entries(selectorsPerfStat.stats)
     .map(([key, value]) => ({ ...value, key }))
@@ -53,4 +52,3 @@ const printPerfSummary = function () {
     customTimersPerfStat
   };
 };
-window.printPerfSummary = printPerfSummary;

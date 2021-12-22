@@ -1,6 +1,6 @@
-import path from "path";
+import * as path from "path";
 
-export function spyAliases(aliases) {
+export function spyWebpackAliases(aliases) {
     const finalAliases = {};
     const supported = new Set(["redux-thunk", "reselect", "re-reselect"])
     for(const [aliasKey, aliasNodeModulePath] of Object.entries(aliases)) {

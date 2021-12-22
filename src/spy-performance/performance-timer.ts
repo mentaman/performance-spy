@@ -1,5 +1,7 @@
 export class PerfStatsStuff {
-  constructor(type) {
+  type: string;
+  stats: {[key: string]: any}
+  constructor(type: string = "") {
     this.type = type;
     this.stats = {};
   }

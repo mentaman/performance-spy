@@ -8,6 +8,11 @@ export const getCustomTimers = () => {
 };
 
 class CustomSpyFunctionsTimer {
+  name: string;
+  startTime: number;
+  endTime: number;
+  duration: number;
+
   constructor(name) {
     this.name = name;
     this.startTime = performance.now();
@@ -55,7 +60,6 @@ class CustomSpyFunctionsTimer {
     }
   }
 }
-const startCustomTimer = function (name) {
+export const startCustomTimer = function (name: string): CustomSpyFunctionsTimer {
   return new CustomSpyFunctionsTimer(name);
 };
-window.startCustomTimer = startCustomTimer;
