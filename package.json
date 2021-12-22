@@ -1,0 +1,11 @@
+{
+  "name": "performance-spy",
+  "version": "1.0.0",
+  "description": "Performance spy - spy on common libraries and check their performance",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "",
+  "license": "ISC"
+}
