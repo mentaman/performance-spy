@@ -5,7 +5,8 @@
 It'll override the implentation of your favorite libraries!
 
 - React ( not fully implemented yet )
-- Redux
+- Redux Reducers ( not fully implented yet )
+- Redux Dispatches
 - Redux Thunk
 - Moment ( not implented yet )
 - reselect
