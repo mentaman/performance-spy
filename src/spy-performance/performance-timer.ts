@@ -6,7 +6,7 @@ export class PerfStatsStuff {
     this.stats = {};
   }
 
-  createStat(key, name, defaultValue) {
+  createStat(key: string, name: string, defaultValue: number | PerfStatsStuff) {
     if (!this.stats[key]) {
       this.stats[key] = {};
     }
@@ -15,42 +15,42 @@ export class PerfStatsStuff {
     }
   }
 
-  statExists(key, name) {
+  statExists(key: string, name: string) {
     return this.stats[key] && this.stats[key][name] !== undefined;
   }
 
-  getSubStat(key, name) {
+  getSubStat(key: string, name: string) {
     if (!this.statExists(key, name)) {
       this.createStat(key, name, new PerfStatsStuff());
     }
     return this.stats[key][name];
   }
 
-  setStat(key, name, value) {
+  setStat(key: string, name: string, value: number) {
     this.createStat(key, name, value);
     this.stats[key][name] = value;
   }
 
-  increaseStat(key, name, increaseBy) {
+  increaseStat(key: string, name: string, increaseBy: number) {
     this.createStat(key, name, 0);
     this.stats[key][name] += increaseBy;
   }
 
-  maxStat(key, name, value) {
+  maxStat(key: string, name: string, value: number) {
     this.createStat(key, name, value);
     this.stats[key][name] = Math.max(value, this.stats[key][name]);
   }
 
-  minStat(key, name, value) {
+  minStat(key: string, name: string, value: number) {
     this.createStat(key, name, value);
     this.stats[key][name] = Math.min(value, this.stats[key][name]);
   }
 
-  forwardStat(key, name) {
+  forwardStat(key: string, name: string) {
     this.increaseStat(key, name, 1);
   }
 
-  addDurationStat(key, duration) {
+  addDurationStat(key: string, duration: number) {
     this.increaseStat(key, "duration", duration);
     this.forwardStat(key, "count");
     if (duration > 16) {

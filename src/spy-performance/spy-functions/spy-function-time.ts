@@ -7,7 +7,7 @@ export const spyFunctionTime = (
   key: string,
   { beforeResultsChecker = null, resultsChecker = null, checkArgs = false, keepFuncRefs = {} }: any = {}
 ): any => {
-  return function () {
+  return function (this: any) {
     if (keepFuncRefs.lastReset && getCurrentReset() > keepFuncRefs.lastReset) {
       keepFuncRefs.count = undefined;
       keepFuncRefs.lastArgs = undefined;

@@ -1,3 +1,4 @@
+
 import * as rereselect from "re-reselect/es";
 
 const _window = typeof window !== "undefined" ? window : null;

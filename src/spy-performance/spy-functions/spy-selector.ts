@@ -1,10 +1,10 @@
 import { combinerPerfStat, selectorsPerfStat } from "../summary/summaries";
 import { spyFunctionTime } from "./spy-function-time";
 
-let currentSelectorKey = null;
-let currentCacheSelectorKey = null;
+let currentSelectorKey: string | null = null;
+let currentCacheSelectorKey: string | null = null;
 
-const spySelectorTime = originalSelectorFunc => {
+const spySelectorTime = (originalSelectorFunc: any) => {
   return function () {
     const combinerFunc = arguments[arguments.length - 1];
     let key = combinerFunc.toString().substr(0, 600);
@@ -19,9 +19,9 @@ const spySelectorTime = originalSelectorFunc => {
   };
 };
 
-const spySelectorMemoizer = originalMemoized => {
+const spySelectorMemoizer = (originalMemoized: any) => {
   return function () {
-    const key = currentSelectorKey;
+    const key: string | null = currentSelectorKey;
     currentSelectorKey = null;
     if (key !== null) {
       arguments[0] = spyFunctionTime(arguments[0], combinerPerfStat, key, { checkArgs: true });
@@ -31,16 +31,15 @@ const spySelectorMemoizer = originalMemoized => {
   };
 };
 
-const spyCreateSelectorTime = function (originalCreateSelectorFunc) {
+export const spyCreateSelectorTime = function (originalCreateSelectorFunc: any) {
   return function () {
     arguments[0] = spySelectorMemoizer(arguments[0]);
     const spiedFunction = originalCreateSelectorFunc(...arguments);
     return spySelectorTime(spiedFunction);
   };
 };
-window.spyCreateSelectorTime = spyCreateSelectorTime;
 
-const spyCachedInnerInnerTime = function (myfunc, key) {
+const spyCachedInnerInnerTime = function (myfunc: any, key: string) {
   return function () {
     currentCacheSelectorKey = key;
     const spiedFunction = myfunc(...arguments);
@@ -48,14 +47,14 @@ const spyCachedInnerInnerTime = function (myfunc, key) {
     return spiedFunction;
   };
 };
-const spyCachedInnerTime = function (myfunc, key) {
+const spyCachedInnerTime = function (myfunc: any, key: string) {
   return function () {
     const spiedFunction = myfunc(...arguments);
     return spyCachedInnerInnerTime(spiedFunction, key);
   };
 };
 
-const spyCachedCreatorTime = function (selectorFunc) {
+export const spyCachedCreatorTime = function (selectorFunc: any) {
   return function () {
     const combinerFunc = arguments[arguments.length - 1];
 
@@ -64,4 +63,3 @@ const spyCachedCreatorTime = function (selectorFunc) {
     return spyCachedInnerTime(spiedFunction, key);
   };
 };
-window.spyCachedCreatorTime = spyCachedCreatorTime;

@@ -5,18 +5,25 @@
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
   "exports": {
-      ".": {
-          "import": "./dist/mjs/index.js",
-          "require": "./dist/cjs/index.js"
-      }
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js"
+    }
   },
   "description": "Performance spy - spy on common libraries and check their performance",
   "scripts": {
-    "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup"
+    "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && sh ./fixup.sh"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^17.0.2"
+    "@types/node": "^17.0.2",
+    "jest": "^27.4.5",
+    "typescript": "^4.5.4"
+  },
+  "peerDependencies": {
+    "re-reselect": "^4.0.0",
+    "redux-thunk": "^2.4.1",
+    "reselect": "^4.1.5"
   }
 }

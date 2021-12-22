@@ -1,8 +1,8 @@
 
 import * as path from "path";
 
-export function spyJestAliases(jest, aliases) {
-    const finalAliases = {};
+export function spyJestAliases(jest: any, aliases: {[key: string]: string}) {
+    const finalAliases: {[key: string]: string} = {};
     const supported = new Set(["redux-thunk", "reselect", "re-reselect"])
     for(const [aliasKey, aliasNodeModulePath] of Object.entries(aliases)) {
         if(supported.has(aliasKey)) {
