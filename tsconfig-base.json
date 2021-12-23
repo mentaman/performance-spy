@@ -20,7 +20,12 @@
         "types": ["node", "jest"],
         "typeRoots": [
             "./types"
-        ]
+        ],
+        "paths": {
+            "reselect-original": ["reselect"],
+            "re-reselect-original": ["re-reselect"],
+            "redux-thunk-original": ["redux-thunk"]
+        }
     },
     "compileOnSave": false,
     "exclude": ["node_modules", "dist"],

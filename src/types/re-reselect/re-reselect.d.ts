@@ -1,4 +1,12 @@
-declare module "re-reselect/es" {
+declare module 'redux-thunk-original' {
+    
+}
+declare module 'reselect-original' {
+    export function defaultMemoize(): void;
+    export function createSelector(): void;
+    export function createSelectorCreator(): void;
+}
+declare module "re-reselect-original" {
     export type Selector<S, R> = (state: S, ...args: any[]) => R;
     export type Resolver<S> = (state: S, ...args: any[]) => number | string;
     export type OutputSelector<S, T> = (state: S, ...args: any[]) => T;
