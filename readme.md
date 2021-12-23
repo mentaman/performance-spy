@@ -51,16 +51,15 @@ For example if you have in reselect a function that takes 1 seconds each time, a
 
 ## Setup with jest
 
-1. add to jest.init
-    require("performance-spy").enableSpying();
+1. add to jest.config.js
 
-2. and then:
-    
-    require("performance-spy").spyJestAliases(jest, {
-        "redux-thunk": path.resolve("./node_modules/redux-thunk"),
-        "reselect": path.resolve("./node_modules/reselect"),
-        "re-reselect": path.resolve("./re-reselect-module"),
-    })
+    moduleNameMapper: {
+        // my name mappers...
+        ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect"])
+    }
+
+2. add to jest.init
+    require("performance-spy").enableSpying();
 
 ## How to research with it
 
