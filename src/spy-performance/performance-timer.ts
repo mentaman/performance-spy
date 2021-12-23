@@ -1,6 +1,18 @@
 export class PerfStatsStuff {
   type: string;
-  stats: {[key: string]: any}
+  stats: {
+    [key: string]: {
+      duration?: number;
+      count?: number;
+      maxCount?: number;
+      minCount?: number;
+      moreThanFrameCount?: number;
+      'moreThan0.1s'?: number;
+    } & {
+      [key: string]: number | PerfStatsStuff
+    }
+  }
+
   constructor(type: string = "") {
     this.type = type;
     this.stats = {};
@@ -10,6 +22,7 @@ export class PerfStatsStuff {
     if (!this.stats[key]) {
       this.stats[key] = {};
     }
+
     if (this.stats[key][name] === undefined) {
       this.stats[key][name] = defaultValue;
     }
@@ -23,6 +36,7 @@ export class PerfStatsStuff {
     if (!this.statExists(key, name)) {
       this.createStat(key, name, new PerfStatsStuff());
     }
+
     return this.stats[key][name];
   }
 
@@ -33,17 +47,17 @@ export class PerfStatsStuff {
 
   increaseStat(key: string, name: string, increaseBy: number) {
     this.createStat(key, name, 0);
-    this.stats[key][name] += increaseBy;
+    (this.stats[key][name] as number) += increaseBy;
   }
 
   maxStat(key: string, name: string, value: number) {
     this.createStat(key, name, value);
-    this.stats[key][name] = Math.max(value, this.stats[key][name]);
+    this.stats[key][name] = Math.max(value, this.stats[key][name] as number);
   }
 
   minStat(key: string, name: string, value: number) {
     this.createStat(key, name, value);
-    this.stats[key][name] = Math.min(value, this.stats[key][name]);
+    this.stats[key][name] = Math.min(value, this.stats[key][name] as number);
   }
 
   forwardStat(key: string, name: string) {

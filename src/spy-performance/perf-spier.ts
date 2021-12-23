@@ -7,16 +7,17 @@ import { startCustomTimer, CustomSpyFunctionsTimer } from "./custom-timer/custom
 
 declare global {
     interface Window {
-        perfStatsReset: () => void;
-        getPerfSummary: () => void;
-        spyThunk: (thunk?: any) => any;
-        spyCreateSelectorTime: (createSelector: any) => any;
-        spyCachedCreatorTime: (cachedCreatorTime: any) => any;
-        startCustomTimer: (key: string) => CustomSpyFunctionsTimer
+        perfStatsReset: typeof perfStatsReset;
+        getPerfSummary: typeof getPerfSummary;
+        spyThunk: typeof spyThunk;
+        spyCreateSelectorTime: typeof spyCreateSelectorTime;
+        spyCachedCreatorTime: typeof spyCachedCreatorTime;
+        startCustomTimer: typeof startCustomTimer;
     }
 }
+
 export const enableSpying = () => {
-    if(typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
         window.perfStatsReset = perfStatsReset;
         window.getPerfSummary = getPerfSummary;
         window.spyThunk = spyThunk;
