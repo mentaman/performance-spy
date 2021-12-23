@@ -1,10 +1,10 @@
 {
   "name": "performance-spy",
   "version": "1.0.0",
-  "main": "./lib/index.js",
-  "jsnext:main": "./es/index.js",
-  "module": "./es/index.js",
-  "types": "./es/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "jsnext:main": "./dist/es/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
   "files": [
     "lib",
     "src",
@@ -12,25 +12,26 @@
   ],
   "exports": {
     ".": {
-      "import": "./es/index.js",
-      "require": "./lib/index.js"
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.js"
     },
     "./resolver/redux-thunk-module": {
-      "import": "./es/resolver/redux-thunk-module.js",
-      "require": "./lib/resolver/redux-thunk-module.js"
+      "import": "./resolver/redux-thunk-module/dist/es/index.js",
+      "require": "./resolver/redux-thunk-module/dist/lib/index.js"
     },
     "./resolver/reselect-module": {
-      "import": "./es/resolver/reselect-module.js",
-      "require": "./lib/resolver/reselect-module.js"
+      "import": "./resolver/reselect-module/dist/es/index.js",
+      "require": "./resolver/reselect-module/dist/lib/index.js"
     },
     "./resolver/re-reselect-module": {
-      "import": "./es/resolver/re-reselect-module.js",
-      "require": "./lib/resolver/re-reselect-module.js"
+      "import": "./resolver/re-reselect-module/dist/es/index.js",
+      "require": "./resolver/re-reselect-module/dist/lib/index.js"
     }
   },
   "description": "Performance spy - spy on common libraries and check their performance",
   "scripts": {
-    "build": "rm -fr lib && rm -rf es && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
+    "build": "rm -rf resolver && rm -rf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run resolver-post-build",
+    "resolver-post-build": "node resolver-fixer.js"
   },
   "author": "",
   "license": "ISC",

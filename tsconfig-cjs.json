@@ -2,7 +2,7 @@
     "extends": "./tsconfig-base.json",
     "compilerOptions": {
         "module": "commonjs",
-        "outDir": "lib",
+        "outDir": "dist/lib",
         "target": "es2015"
     }
 }
