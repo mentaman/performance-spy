@@ -7,6 +7,6 @@ export function spyWebpackAliases(aliases: {[key: string]: string} = {}) {
         }
         finalAliases[aliasKey] = "performance-spy/resolver/"+aliasKey+"-module";
     }
-    console.log("Overriden libraries by webpack spier", finalAliases);
+    console.log("Overriden libraries by webpack performance spier", finalAliases);
     return finalAliases;
 }
