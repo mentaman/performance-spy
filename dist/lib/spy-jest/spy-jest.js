@@ -10,7 +10,7 @@ const spyJestAliases = (nodemodule, aliases) => {
         }
         finalAliases[aliasKey + "(.*)"] = nodemodule + "/performance-spy/resolver/" + aliasKey + "-module$1";
     }
-    console.log("Overriden libraries by jest spier", finalAliases);
+    console.log("Overriden libraries by jest performance spier", finalAliases);
     return finalAliases;
 };
 exports.spyJestAliases = spyJestAliases;

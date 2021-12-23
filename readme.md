@@ -86,3 +86,39 @@ For example if you have in reselect a function that takes 1 seconds each time, a
     getPerfSummary
 
 5. you'll see a summary of this action
+
+## Custom measures
+
+If you have a function that you know it's slow, but you don't know which part
+you can use 
+
+    const timer = startCustomTimer("measuring a")
+    // some actions
+    timer.end()
+
+and then you'll see it as part of getPerfSummary
+
+so you can divide and conquer your slow function until you find which part is slow:
+
+    const measureHeavy = startCustomTimer("heavy")
+    someHeavyStuff()
+    measureHeavy.end()
+
+    const measureLight = startCustomTimer("light")
+    someLightStuff()
+    measureLight.end()
+
+    const measureSuspect = startCustomTimer("suspicious")
+    SomeSuspiciousStuff()
+    measureSuspect.end()
+
+and you'll get the answer which one is the slowing part? the heavy function? the suspicious? the light?
+
+
+you can also provide data to it, for dynamic measure, to know which id had a slow transaction
+
+    const measureIdStuff = startCustomTimer("suspicious"+id)
+    heavyFunction(id)
+    measureIdStuff.end()
+
+
