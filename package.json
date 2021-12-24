@@ -1,6 +1,6 @@
 {
   "name": "performance-spy",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "./dist/lib/index.js",
   "jsnext:main": "./dist/es/index.js",
   "module": "./dist/es/index.js",
