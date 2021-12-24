@@ -16,11 +16,6 @@ export const perfStatsReset = function () {
 };
 
 export const getPerfSummary = function () {
-  const a = Object.entries(selectorsPerfStat.stats)
-  const b = ({ ...a[1], key: a[0] })
-  const c = Object.values(selectorsPerfStat.stats)[0]
-  const d = c.duration
-
   const longestSelectors = Object.values(selectorsPerfStat.stats)
     .sort((a, b) => (b.duration || 0) - (a.duration || 0));
 

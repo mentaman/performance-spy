@@ -31,7 +31,8 @@
   "description": "Performance spy - spy on common libraries and check their performance",
   "scripts": {
     "build": "rm -rf resolver && rm -rf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run resolver-post-build",
-    "resolver-post-build": "node resolver-fixer.js"
+    "resolver-post-build": "node resolver-fixer.js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "author": "",
   "license": "ISC",
@@ -42,6 +43,7 @@
     "re-reselect": "^4.0.0",
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.5",
+    "tslint": "^6.1.3",
     "typescript": "^4.5.4"
   },
   "peerDependencies": {

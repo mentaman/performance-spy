@@ -60,11 +60,11 @@ export const spyFunctionTime = (
       }
 
       if (keepFuncRefs.lastArgsKey !== key) {
-        console.log("last key bug", keepFuncRefs.lastArgsKey, key);
+        // warning - shouldn't happen
       }
 
       if (!wasChanged) {
-        console.log("wasn't changed!!!", key, args, keepFuncRefs.lastArgs);
+        // warning - shouldn't happen
       }
     }
 
@@ -75,6 +75,6 @@ export const spyFunctionTime = (
   if (resultsChecker) {
     resultsChecker(this, res, args, perfstat, key);
   }
-  
+
   return res;
 };

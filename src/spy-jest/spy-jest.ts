@@ -1,4 +1,4 @@
-
+/* tslint:disable:no-console */
 export const spyJestAliases = (nodemodule: string, aliases: string[]) => {
     const finalAliases: {[key: string]: string} = {};
     const supported = new Set(["redux-thunk", "reselect", "re-reselect"])
@@ -8,7 +8,7 @@ export const spyJestAliases = (nodemodule: string, aliases: string[]) => {
         }
         finalAliases[aliasKey+"(.*)"] = nodemodule+"/performance-spy/resolver/"+aliasKey+"-module$1";
     }
-    
+
     console.log("Overriden libraries by jest performance spier", finalAliases);
 
     return finalAliases;

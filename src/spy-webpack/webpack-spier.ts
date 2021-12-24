@@ -1,3 +1,4 @@
+/* tslint:disable:no-console */
 export function spyWebpackAliases(aliases: {[key: string]: string} = {}) {
     const finalAliases: {[key: string]: string} = {};
     const supported = new Set(["redux-thunk", "reselect", "re-reselect"])
