@@ -1,10 +1,18 @@
+import { Dispatch } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 import { dispatchPerfStat } from "../summary/summaries";
 import { spyFunctionTime } from "./spy-function-time";
 
 export const spyThunk = function () {
-  function createThunkMiddleware(extraArgument = undefined) {
-    return ({ dispatch, getState }: any) =>
-      (next: any) =>
+  function createThunkMiddleware(extraArgument?: any) {
+    const middleware = ({
+      dispatch,
+      getState
+    }: {
+      dispatch: ThunkDispatch<any, any, any>;
+      getState: () => any
+    }) =>
+      (next: Dispatch) =>
       (action: any) => {
         if (typeof action === "function") {
           const key = action.toString().substr(0, 600);
@@ -15,9 +23,10 @@ export const spyThunk = function () {
 
         return next(action);
       };
+
+    middleware.withExtraArgument = createThunkMiddleware;
+    return middleware;
   }
 
-  const thunk: any = createThunkMiddleware();
-  thunk.withExtraArgument = createThunkMiddleware;
-  return thunk;
+  return createThunkMiddleware();
 };

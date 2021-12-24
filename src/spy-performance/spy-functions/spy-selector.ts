@@ -1,10 +1,12 @@
 import { combinerPerfStat, selectorsPerfStat } from "../summary/summaries";
 import { spyFunctionTime } from "./spy-function-time";
 
+type GenericFunction = (...args: any[]) => any;
+
 let currentSelectorKey: string | null = null;
 let currentCacheSelectorKey: string | null = null;
 
-const spySelectorTime = (originalSelectorFunc: any) => {
+const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
   return function () {
     const combinerFunc = arguments[arguments.length - 1];
     let key = combinerFunc.toString().substr(0, 600);
@@ -19,7 +21,7 @@ const spySelectorTime = (originalSelectorFunc: any) => {
   };
 };
 
-const spySelectorMemoizer = (originalMemoized: any) => {
+const spySelectorMemoizer = (originalMemoized: GenericFunction) => {
   return function () {
     const key: string | null = currentSelectorKey;
     currentSelectorKey = null;
@@ -31,25 +33,25 @@ const spySelectorMemoizer = (originalMemoized: any) => {
   };
 };
 
-export const spyCreateSelectorTime = function (originalCreateSelectorFunc: any) {
-  return function () {
-    arguments[0] = spySelectorMemoizer(arguments[0]);
-    const spiedFunction = originalCreateSelectorFunc(...arguments);
+export const spyCreateSelectorTime = function (originalCreateSelectorFunc: GenericFunction) {
+  return (...args: any[]) => {
+    args[0] = spySelectorMemoizer(args[0]);
+    const spiedFunction = originalCreateSelectorFunc(...args);
     return spySelectorTime(spiedFunction);
   };
 };
 
-const spyCachedInnerInnerTime = function (myfunc: any, key: string) {
+const spyCachedInnerInnerTime = function (fn: GenericFunction, key: string) {
   return function () {
     currentCacheSelectorKey = key;
-    const spiedFunction = myfunc(...arguments);
+    const spiedFunction = fn(...arguments);
     currentCacheSelectorKey = null;
     return spiedFunction;
   };
 };
-const spyCachedInnerTime = function (myfunc: any, key: string) {
+const spyCachedInnerTime = function (fn: GenericFunction, key: string) {
   return function () {
-    const spiedFunction = myfunc(...arguments);
+    const spiedFunction = fn(...arguments);
     return spyCachedInnerInnerTime(spiedFunction, key);
   };
 };

@@ -9,10 +9,10 @@ if(!fs.existsSync(resolverPath)) {
 }
 for(const resolver of resolvers) {
     console.log(resolver);
-    const resolverFinalPath = path.join(resolverPath, "./"+resolver);
-    const resolverFinalPathDist = path.join(resolverFinalPath, "./dist");
-    const resolverFinalPathDistEs = path.join(resolverFinalPathDist, "./es");
-    const resolverFinalPathDistLib = path.join(resolverFinalPathDist, "./lib");
+    const resolverFinalPath = path.join(resolverPath, resolver);
+    const resolverFinalPathDist = path.join(resolverFinalPath, "dist");
+    const resolverFinalPathDistEs = path.join(resolverFinalPathDist, "es");
+    const resolverFinalPathDistLib = path.join(resolverFinalPathDist, "lib");
     
     if(!fs.existsSync(resolverFinalPath)) {
         fs.mkdirSync(resolverFinalPath);    
