@@ -35,12 +35,11 @@ Install library
 
     alias: {
         /* my aliases */
-        ...require("performance-spy").spyWebpackAliases({
-            "redux-thunk": path.resolve("./node_modules/redux-thunk"),
-            "reselect": path.resolve("./node_modules/reselect"),
-            "re-reselect": path.resolve("./node_modules/re-reselect"),
-            "redux": path.resolve("./node_modules/redux"),
-        })
+        ...require("performance-spy").spyWebpackAliases(path.resolve("./node_modules"), [
+          "redux-thunk",
+          "re-reselect",
+          "reselect"
+        ])
     }
 
 it'll override redux/reselect with performance-spy libraries
