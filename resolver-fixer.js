@@ -32,13 +32,7 @@ for(const resolver of resolvers) {
         name: resolver,
         "main": "./dist/lib/index.js",
         "jsnext:main": "./dist/es/index.js",
-        "module": "./dist/es/index.js",
-        "exports": {
-            ".": {
-            "import": "./dist/es/index.js",
-            "require": "./dist/lib/index.js"
-            }
-        }
+        "module": "./dist/es/index.js"
     }
     fs.writeFileSync(path.join(resolverFinalPath, "./package.json"), JSON.stringify(packageData, null, "\t"), {encoding: "utf-8"})
 }

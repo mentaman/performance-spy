@@ -6,7 +6,7 @@
 It'll override the implentation of your favorite libraries!
 
 - React ( still WIP )
-- Redux Reducers ( still WIP )
+- Redux Reducers
 - Redux Dispatches
 - Redux Thunk
 - Moment ( not implented yet )
@@ -35,11 +35,11 @@ Install library
 
     alias: {
         /* my aliases */
-        ...require("performance-spy").spyWebpackAliases({
-            "redux-thunk": path.resolve("./node_modules/redux-thunk"),
-            "reselect": path.resolve("./node_modules/reselect"),
-            "re-reselect": path.resolve("./re-reselect-module"),
-        })
+        ...require("performance-spy").spyWebpackAliases(path.resolve("./node_modules"), [
+          "redux-thunk",
+          "re-reselect",
+          "reselect"
+        ])
     }
 
 it'll override redux/reselect with performance-spy libraries
@@ -60,7 +60,7 @@ See example [Example](https://github.com/mentaman/performance-spy/tree/main/exam
 
     moduleNameMapper: {
         // my name mappers...
-        ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect"])
+        ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect", "redux"])
     }
 
 2 - add to jest setup

@@ -12,7 +12,7 @@ module.exports = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    ...spyJestAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect"])
+    ...spyJestAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect", "redux"])
   },
   // The root directory that Jest should scan for tests and modules within
   rootDir: "./",

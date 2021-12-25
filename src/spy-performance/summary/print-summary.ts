@@ -3,9 +3,11 @@ import {
   allPerfStats,
   combinerPerfStat,
   dispatchPerfStat,
-  selectorsPerfStat
+  selectorsPerfStat,
+  reducersPerfStat
 } from "../summary/summaries";
 import { resetCountUpdate } from "../summary/reset-counter";
+import { PerfStatsStuff, Stat } from "../performance-timer";
 
 export const perfStatsReset = function () {
   resetCustomTimers();
@@ -14,6 +16,11 @@ export const perfStatsReset = function () {
     perfStat.reset();
   }
 };
+
+function reducerChangedTimes(r: Stat): number {
+  return Object.values((r?.args as PerfStatsStuff)?.stats || {})
+               .reduce((total, num) => total+(num.count || 0), 0);
+}
 
 export const getPerfSummary = function () {
   const longestSelectors = Object.values(selectorsPerfStat.stats)
@@ -31,12 +38,17 @@ export const getPerfSummary = function () {
     .map(([key, value]) => ({ ...value, key }))
     .sort((a, b) => (b.duration || 0) - (a.duration || 0));
 
+  const mostChangedReducers = Object.entries(reducersPerfStat.stats)
+    .map(([key, value]) => ({...value, key, changedTimes: reducerChangedTimes(value)}))
+    .sort((a, b) => (b.changedTimes || 0) - (a.changedTimes || 0));
+
   const customTimersPerfStat = getCustomTimers();
 
   return {
     longestSelectors,
     longestCombiners,
     mostCalculatedCombiners,
+    mostChangedReducers,
     longestDispatches,
     customTimersPerfStat
   };

@@ -1,17 +1,17 @@
+export type Stat =
+  {
+    duration?: number;
+    count?: number;
+    maxCount?: number;
+    minCount?: number;
+    moreThanFrameCount?: number;
+    'moreThan0.1s'?: number;
+  } & {
+    [key: string]: number | PerfStatsStuff
+  }
 export class PerfStatsStuff {
   type: string;
-  stats: {
-    [key: string]: {
-      duration?: number;
-      count?: number;
-      maxCount?: number;
-      minCount?: number;
-      moreThanFrameCount?: number;
-      'moreThan0.1s'?: number;
-    } & {
-      [key: string]: number | PerfStatsStuff
-    }
-  }
+  stats: {[key: string]: Stat};
 
   constructor(type: string = "") {
     this.type = type;
