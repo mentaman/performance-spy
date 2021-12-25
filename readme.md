@@ -54,6 +54,8 @@ You can allow it though to a specific user in production for research with some 
 
 ## Setup with jest
 
+See example [Link text Here](https://github.com/mentaman/performance-spy/tree/main/examples/jest-example)
+
 1 - add to jest.config.js
 
     moduleNameMapper: {
