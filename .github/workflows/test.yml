@@ -3,8 +3,42 @@ name: Test
 on: 
   push:
 
-
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install
+        run: |
+          npm install
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+
+      - name: Build
+        if: success()
+        run: |
+          npm run build
+      
+      - name: Clean package dependecies
+        if: success()
+        run: |
+          rm -rf node_modules
+
+      - name: Install Example
+        if: success()
+        run: |
+          cd examples/jest-example
+          npm install
+      
+      - name: Run Example Test
+        if: success()
+        run: |
+          cd examples/jest-example
+          npm test
+          
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +52,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
-      - name: Test
+      - name: Lint
         if: success()
         run: |
           npm run lint
