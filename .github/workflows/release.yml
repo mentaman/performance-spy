@@ -29,8 +29,9 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      - run: echo "GITHUB_SHA_SHORT=$(cat package.json | jq .version)" >> $RELEASED_PACKAGE_VERSION
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          automatic_release_tag: latest
+          automatic_release_tag: "${{env.RELEASED_PACKAGE_VERSION}}"
