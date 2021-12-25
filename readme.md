@@ -55,6 +55,8 @@ You can allow it though to a specific user in production for research with some 
 
 ## Setup with jest
 
+See example [Example](https://github.com/mentaman/performance-spy/tree/main/examples/jest-example)
+
 1 - add to jest.config.js
 
     moduleNameMapper: {
@@ -62,9 +64,15 @@ You can allow it though to a specific user in production for research with some 
         ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect", "redux"])
     }
 
-2 - add to jest.init
+2 - add to jest setup
 
     require("performance-spy").enableSpying();
+
+3 - to jest beforeEach
+
+    beforeEach(() => {
+      perfStatsReset();
+    });
 
 ## How to research with it
 
