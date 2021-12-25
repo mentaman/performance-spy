@@ -1,4 +1,4 @@
-export type Stat = 
+export type Stat =
   {
     duration?: number;
     count?: number;

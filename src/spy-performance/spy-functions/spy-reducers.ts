@@ -21,7 +21,7 @@ function resultsChecker(_ref: any, res: any, args: IArguments, perfstat: PerfSta
     });
     return spidesReducers;
   };
-  
+
   export const spyReducerCombiner = function (reducerCombiner: GenericFunction) {
     return function (...args: any[]) {
       args[0] = spyReducers(args[0]);
