@@ -4,6 +4,7 @@ import { spyCreateSelectorTime, spyCachedCreatorTime } from "./spy-functions/spy
 
 import { perfStatsReset, getPerfSummary } from "./summary/print-summary";
 import { startCustomTimer, CustomSpyFunctionsTimer } from "./custom-timer/custom-timer";
+import { spyReducerCombiner } from "./spy-functions/spy-reducers";
 
 declare global {
     interface Window {
@@ -12,6 +13,7 @@ declare global {
         spyThunk: typeof spyThunk;
         spyCreateSelectorTime: typeof spyCreateSelectorTime;
         spyCachedCreatorTime: typeof spyCachedCreatorTime;
+        spyReducerCombiner: typeof spyReducerCombiner;
         startCustomTimer: typeof startCustomTimer;
     }
 }
@@ -24,5 +26,6 @@ export const enableSpying = () => {
         window.spyCreateSelectorTime = spyCreateSelectorTime;
         window.spyCachedCreatorTime = spyCachedCreatorTime;
         window.startCustomTimer = startCustomTimer;
+        window.spyReducerCombiner = spyReducerCombiner;
     }
 }

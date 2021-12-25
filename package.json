@@ -26,6 +26,10 @@
     "./resolver/re-reselect-module": {
       "import": "./resolver/re-reselect-module/dist/es/index.js",
       "require": "./resolver/re-reselect-module/dist/lib/index.js"
+    },
+    "./resolver/redux-module": {
+      "import": "./resolver/redux-module/dist/es/index.js",
+      "require": "./resolver/redux-module/dist/lib/index.js"
     }
   },
   "description": "Performance spy - spy on common libraries and check their performance",

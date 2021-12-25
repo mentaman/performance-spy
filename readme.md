@@ -38,7 +38,8 @@ Install library
         ...require("performance-spy").spyWebpackAliases({
             "redux-thunk": path.resolve("./node_modules/redux-thunk"),
             "reselect": path.resolve("./node_modules/reselect"),
-            "re-reselect": path.resolve("./re-reselect-module"),
+            "re-reselect": path.resolve("./node_modules/re-reselect"),
+            "redux": path.resolve("./node_modules/redux"),
         })
     }
 
@@ -58,7 +59,7 @@ You can allow it though to a specific user in production for research with some 
 
     moduleNameMapper: {
         // my name mappers...
-        ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect"])
+        ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect", "redux"])
     }
 
 2 - add to jest.init
