@@ -38,7 +38,8 @@ Install library
         ...require("performance-spy").spyWebpackAliases(path.resolve("./node_modules"), [
           "redux-thunk",
           "re-reselect",
-          "reselect"
+          "reselect",
+          "redux"
         ])
     }
 
