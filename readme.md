@@ -63,9 +63,15 @@ See example [Example](https://github.com/mentaman/performance-spy/tree/main/exam
         ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect"])
     }
 
-2 - add to jest.init
+2 - add to jest setup
 
     require("performance-spy").enableSpying();
+
+3 - to jest beforeEach
+
+    beforeEach(() => {
+      perfStatsReset();
+    });
 
 ## How to research with it
 
