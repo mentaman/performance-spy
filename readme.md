@@ -6,7 +6,7 @@
 It'll override the implentation of your favorite libraries!
 
 - React ( still WIP )
-- Redux Reducers ( still WIP )
+- Redux Reducers
 - Redux Dispatches
 - Redux Thunk
 - Moment ( not implented yet )
