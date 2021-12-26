@@ -6,7 +6,7 @@ function reducerChangedTimes(r: Stat): number {
     return Object.values((r?.args as PerfStatsStuff)?.stats || {})
                  .reduce((total, num) => total+(num.count || 0), 0);
   }
-  
+
 export class Summaries {
     selectorsPerfStat: PerfStatsStuff;
     dispatchPerfStat: PerfStatsStuff;
@@ -40,7 +40,7 @@ export class Summaries {
 
     getSummary() {
         const { combinerPerfStat, dispatchPerfStat, selectorsPerfStat, reducersPerfStat } = this;
-        
+
         const longestSelectors = Object.values(selectorsPerfStat.stats)
             .sort((a, b) => (b.duration || 0) - (a.duration || 0));
 
