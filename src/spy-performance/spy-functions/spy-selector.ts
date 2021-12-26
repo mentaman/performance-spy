@@ -1,4 +1,3 @@
-import { combinerPerfStat, selectorsPerfStat } from "../summary/summaries";
 import { spyFunctionTime } from "./spy-function-time";
 
 type GenericFunction = (...args: any[]) => any;
@@ -17,7 +16,7 @@ const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
     currentSelectorKey = key;
     const spiedFunction = originalSelectorFunc(...arguments);
     currentSelectorKey = null;
-    return spyFunctionTime(spiedFunction, selectorsPerfStat, key);
+    return spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
   };
 };
 
@@ -26,7 +25,7 @@ const spySelectorMemoizer = (originalMemoized: GenericFunction) => {
     const key: string | null = currentSelectorKey;
     currentSelectorKey = null;
     if (key !== null) {
-      arguments[0] = spyFunctionTime(arguments[0], combinerPerfStat, key, { checkArgs: true });
+      arguments[0] = spyFunctionTime(arguments[0], (summary) => summary.combinerPerfStat, key, { checkArgs: true });
     }
     const spiedFunction = originalMemoized(...arguments);
     return spiedFunction;
@@ -49,6 +48,7 @@ const spyCachedInnerInnerTime = function (fn: GenericFunction, key: string) {
     return spiedFunction;
   };
 };
+
 const spyCachedInnerTime = function (fn: GenericFunction, key: string) {
   return function () {
     const spiedFunction = fn(...arguments);
