@@ -3,7 +3,7 @@ import { Summaries } from "./summaries";
 export const GlobalSummaries = new Summaries();
 
 let idx=0;
-export const getSummaryFor = (func: Function) => {
+export const getSummaryFor = (func: () => void) => {
     const summaries = new Summaries();
     Zone.current.fork({
         name: "summary"+(idx++),
