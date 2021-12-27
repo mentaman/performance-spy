@@ -1,3 +1,4 @@
+import "zone.js";
 import { Summaries } from "./summaries";
 
 export const GlobalSummaries = new Summaries();

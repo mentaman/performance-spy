@@ -1,5 +1,4 @@
 import { PerfStat } from "../custom-timer/custom-timer";
-import "zone.js";
 import { PerfStatsStuff, Stat } from "../performance-timer";
 
 function reducerChangedTimes(r: Stat): number {
