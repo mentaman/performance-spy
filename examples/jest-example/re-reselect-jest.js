@@ -60,13 +60,13 @@ describe("re-reselect performance spying", () => {
         expect(summary.mostCalculatedCombiners[0].args.stats['1'].count).toEqual(4);
     })
 
-    it("should include only current zone", () => {
-        const summary1 = getSummaryFor(() => {
+    it("should include only current zone", async () => {
+        const summary1 = await getSummaryFor(() => {
             selectorExample(1, 2, keyTwo);
             selectorExample(1, 3, keyTwo);
         });
 
-        const summary2 = getSummaryFor(() => {
+        const summary2 = await getSummaryFor(() => {
             selectorExample(1, 3, keyTwo);
             selectorExample(1, 2, keyTwo);
         });
