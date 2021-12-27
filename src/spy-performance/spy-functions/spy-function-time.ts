@@ -25,13 +25,14 @@ export const spyFunctionTime = (
     keepFuncRefs?: KeepFuncRefs;
   } = {}
 ) => (...args: any) => {
-  if (keepFuncRefs.lastReset && getCurrentSummaryForUse().getCurrentReset() > keepFuncRefs.lastReset) {
+  const currentSummary = getCurrentSummaryForUse();
+  if (keepFuncRefs.lastReset && currentSummary.getCurrentReset() > keepFuncRefs.lastReset) {
     keepFuncRefs.count = undefined;
     keepFuncRefs.lastArgs = undefined;
     keepFuncRefs.lastArgsKey = undefined;
   }
 
-  keepFuncRefs.lastReset = getCurrentSummaryForUse().getCurrentReset();
+  keepFuncRefs.lastReset = currentSummary.getCurrentReset();
   if (beforeResultsChecker) {
     beforeResultsChecker(this, args);
   }
@@ -40,14 +41,14 @@ export const spyFunctionTime = (
   const res = fn(...args);
   const endTime = performance.now();
   const duration = endTime - startTime;
-  perfstat(getCurrentSummaryForUse()).addDurationStat(key, duration);
+  perfstat(currentSummary).addDurationStat(key, duration);
 
   if (!keepFuncRefs.count) {
     keepFuncRefs.count = 0;
   }
 
   keepFuncRefs.count++;
-  perfstat(getCurrentSummaryForUse()).maxStat(key, "maxCount", keepFuncRefs.count);
+  perfstat(currentSummary).maxStat(key, "maxCount", keepFuncRefs.count);
 
   if (checkArgs) {
     if (keepFuncRefs.lastArgs) {
@@ -55,7 +56,7 @@ export const spyFunctionTime = (
 
       for (let argIdx = 0; argIdx < args.length; argIdx++) {
         if (keepFuncRefs.lastArgs[argIdx] !== args[argIdx]) {
-          (perfstat(getCurrentSummaryForUse()).getSubStat(key, "args") as PerfStatsStuff).forwardStat(argIdx.toString(), "count");
+          (perfstat(currentSummary).getSubStat(key, "args") as PerfStatsStuff).forwardStat(argIdx.toString(), "count");
           wasChanged = true;
         }
       }
@@ -74,7 +75,7 @@ export const spyFunctionTime = (
   }
 
   if (resultsChecker) {
-    resultsChecker(this, res, args, perfstat(getCurrentSummaryForUse()), key);
+    resultsChecker(this, res, args, perfstat(currentSummary), key);
   }
 
   return res;
