@@ -4,7 +4,7 @@ export const GlobalSummaries = new Summaries();
 
 export const getSummaryFor = async (func: () => Promise<any>) => {
     const summaries = new Summaries();
-    let promise = undefined;
+    let promise;
     const domain = await import("domain");
     const d = domain.create();
     (d as any).summaries = summaries;
