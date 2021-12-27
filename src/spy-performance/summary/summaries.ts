@@ -6,6 +6,8 @@ function reducerChangedTimes(r: Stat): number {
                  .reduce((total, num) => total+(num.count || 0), 0);
   }
 
+
+const deepClone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
 export class Summaries {
     selectorsPerfStat: PerfStatsStuff;
     dispatchPerfStat: PerfStatsStuff;
@@ -61,14 +63,14 @@ export class Summaries {
 
         const customTimersPerfStat = this.customTimersPerfStat;
 
-        return {
+        return deepClone({
             longestSelectors,
             longestCombiners,
             mostCalculatedCombiners,
             mostChangedReducers,
             longestDispatches,
             customTimersPerfStat
-        };
+        });
     }
 }
 
