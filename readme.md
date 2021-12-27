@@ -133,7 +133,3 @@ you can also provide data to it, for dynamic measure, to know which id had a slo
     const measureIdStuff = startCustomTimer("suspicious"+id)
     heavyFunction(id)
     measureIdStuff.end()
-
-
-
-
