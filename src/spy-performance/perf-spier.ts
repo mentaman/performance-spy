@@ -3,7 +3,7 @@ import { spyThunk } from "./spy-functions/spy-thunk";
 import { spyCreateSelectorTime, spyCachedCreatorTime } from "./spy-functions/spy-selector";
 
 import { perfStatsReset, getPerfSummary } from "./summary/print-summary";
-import { startCustomTimer, CustomSpyFunctionsTimer } from "./custom-timer/custom-timer";
+import { startCustomTimer } from "./custom-timer/custom-timer";
 import { spyReducerCombiner } from "./spy-functions/spy-reducers";
 
 declare global {
