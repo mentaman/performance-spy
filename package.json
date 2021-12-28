@@ -17,6 +17,16 @@
     }
   },
   "description": "Performance spy - spy on common libraries and check their performance",
+  "homepage": "https://github.com/mentaman/performance-spy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mentaman/performance-spy.git"
+  },
+  "keywords": [
+    "performance",
+    "profiler",
+    "spy"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run resolver-post-build",
     "resolver-post-build": "node resolver-fixer.js",
