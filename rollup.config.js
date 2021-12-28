@@ -15,13 +15,6 @@ const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
   ""
 );
 
-const makeExternalPredicate = (externalArr) => {
-  if (externalArr.length === 0) {
-    return () => false;
-  }
-  const pattern = new RegExp(`^(${externalArr.join("|")})($|/)`);
-  return (id) => pattern.test(id);
-};
 
 function exportLib(input, output) {
   // CommonJS
@@ -33,10 +26,6 @@ function exportLib(input, output) {
         format: "cjs",
         indent: false,
       },
-      external: makeExternalPredicate([
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
-      ]),
       plugins: [
         nodeResolve({
           extensions,
@@ -62,10 +51,6 @@ function exportLib(input, output) {
         format: "es",
         indent: false,
       },
-      external: makeExternalPredicate([
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
-      ]),
       plugins: [
         nodeResolve({
           extensions,
