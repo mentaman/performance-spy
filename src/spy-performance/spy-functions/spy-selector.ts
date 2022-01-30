@@ -6,7 +6,7 @@ let currentSelectorKey: string | null = null;
 let currentCacheSelectorKey: string | null = null;
 
 const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
-  return function () {
+  const spyFunction = function () {
     const combinerFunc = arguments[arguments.length - 1];
     let key = combinerFunc.toString().substr(0, 600);
     if (combinerFunc.name === "resultFuncWithRecomputations") {
@@ -18,6 +18,18 @@ const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
     currentSelectorKey = null;
     return spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
   };
+
+  Object.defineProperty(spyFunction, "resultFunc", {
+    get: function myProperty() {
+        return (originalSelectorFunc as any).resultFunc;
+    },
+    set(value) {
+      (originalSelectorFunc as any).resultFunc = value;
+    }
+  });
+  spyFunction.__originalSpiedFunction = originalSelectorFunc;
+
+  return spyFunction;
 };
 
 const spySelectorMemoizer = (originalMemoized: GenericFunction) => {
