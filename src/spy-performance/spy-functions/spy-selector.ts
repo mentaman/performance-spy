@@ -16,7 +16,20 @@ const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
     currentSelectorKey = key;
     const spiedFunction = originalSelectorFunc(...arguments);
     currentSelectorKey = null;
-    return spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
+
+
+    const spyFunction = spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
+    Object.defineProperty(spyFunction, "resultFunc", {
+      get: function myProperty() {
+          return (spiedFunction as any).resultFunc;
+      },
+      set(value) {
+        (spiedFunction as any).resultFunc = value;
+      }
+    });
+    (spyFunction as any).__originalSpiedFunction = spiedFunction;
+
+    return spyFunction;
   };
 };
 

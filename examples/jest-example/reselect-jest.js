@@ -43,4 +43,12 @@ describe("reselect performance spying", () => {
 
         expect(summary.mostCalculatedCombiners[0].args.stats['1'].count).toEqual(2);
     })
+
+    it("let override selector for tests", () => {
+        const summarySelector = createSelector(() => 100, () => 200, (resA, resB) => resA+resB);
+        const combiner = summarySelector.resultFunc;
+
+        const res = combiner(10, 10);
+        expect(res).toEqual(20);
+    })
 })
