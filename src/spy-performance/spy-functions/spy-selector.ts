@@ -50,9 +50,9 @@ const spyCachedInnerInnerTime = function (fn: GenericFunction, key: string) {
 
   Object.defineProperty(spyFunction, "resultFunc", {
     get: function myProperty() {
-        return this.resultFunc;
+        return (fn as any).resultFunc;
     },
-    set: function(value) {
+    set(value) {
       (fn as any).resultFunc = value;
     }
   });
