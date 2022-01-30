@@ -6,7 +6,7 @@ let currentSelectorKey: string | null = null;
 let currentCacheSelectorKey: string | null = null;
 
 const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
-  const spyFunction = function () {
+  return function () {
     const combinerFunc = arguments[arguments.length - 1];
     let key = combinerFunc.toString().substr(0, 600);
     if (combinerFunc.name === "resultFuncWithRecomputations") {
@@ -18,18 +18,6 @@ const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
     currentSelectorKey = null;
     return spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
   };
-
-  Object.defineProperty(spyFunction, "resultFunc", {
-    get: function myProperty() {
-        return (originalSelectorFunc as any).resultFunc;
-    },
-    set(value) {
-      (originalSelectorFunc as any).resultFunc = value;
-    }
-  });
-  spyFunction.__originalSpiedFunction = originalSelectorFunc;
-
-  return spyFunction;
 };
 
 const spySelectorMemoizer = (originalMemoized: GenericFunction) => {
@@ -45,11 +33,24 @@ const spySelectorMemoizer = (originalMemoized: GenericFunction) => {
 };
 
 export const spyCreateSelectorTime = function (originalCreateSelectorFunc: GenericFunction) {
-  return (...args: any[]) => {
+  const spyFunction = (...args: any[]) => {
     args[0] = spySelectorMemoizer(args[0]);
     const spiedFunction = originalCreateSelectorFunc(...args);
     return spySelectorTime(spiedFunction);
   };
+
+
+  Object.defineProperty(spyFunction, "resultFunc", {
+    get: function myProperty() {
+        return (originalCreateSelectorFunc as any).resultFunc;
+    },
+    set(value) {
+      (originalCreateSelectorFunc as any).resultFunc = value;
+    }
+  });
+  spyFunction.__originalSpiedFunction = originalCreateSelectorFunc;
+
+  return spyFunction;
 };
 
 const spyCachedInnerInnerTime = function (fn: GenericFunction, key: string) {
