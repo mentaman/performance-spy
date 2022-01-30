@@ -49,6 +49,6 @@ describe("reselect performance spying", () => {
         const combiner = summarySelector.resultFunc;
 
         const res = combiner(10, 10);
-        expect(res).toEq(20);
+        expect(res).toEqual(20);
     })
 })
