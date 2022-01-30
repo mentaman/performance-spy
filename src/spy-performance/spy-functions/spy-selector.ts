@@ -16,7 +16,20 @@ const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
     currentSelectorKey = key;
     const spiedFunction = originalSelectorFunc(...arguments);
     currentSelectorKey = null;
-    return spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
+
+
+    const spyFunction = spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
+    Object.defineProperty(spyFunction, "resultFunc", {
+      get: function myProperty() {
+          return (originalSelectorFunc as any).resultFunc;
+      },
+      set(value) {
+        (originalSelectorFunc as any).resultFunc = value;
+      }
+    });
+    (spyFunction as any).__originalSpiedFunction = originalSelectorFunc;
+
+    return spyFunction;
   };
 };
 
@@ -33,24 +46,11 @@ const spySelectorMemoizer = (originalMemoized: GenericFunction) => {
 };
 
 export const spyCreateSelectorTime = function (originalCreateSelectorFunc: GenericFunction) {
-  const spyFunction = (...args: any[]) => {
+  return (...args: any[]) => {
     args[0] = spySelectorMemoizer(args[0]);
     const spiedFunction = originalCreateSelectorFunc(...args);
     return spySelectorTime(spiedFunction);
   };
-
-
-  Object.defineProperty(spyFunction, "resultFunc", {
-    get: function myProperty() {
-        return (originalCreateSelectorFunc as any).resultFunc;
-    },
-    set(value) {
-      (originalCreateSelectorFunc as any).resultFunc = value;
-    }
-  });
-  spyFunction.__originalSpiedFunction = originalCreateSelectorFunc;
-
-  return spyFunction;
 };
 
 const spyCachedInnerInnerTime = function (fn: GenericFunction, key: string) {
