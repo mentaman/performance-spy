@@ -57,11 +57,21 @@ const spyCachedInnerTime = function (fn: GenericFunction, key: string) {
 };
 
 export const spyCachedCreatorTime = function (selectorFunc: any) {
-  return function () {
+  const spyFunction = function () {
     const combinerFunc = arguments[arguments.length - 1];
 
     const key = combinerFunc.toString().substr(0, 500);
     const spiedFunction = selectorFunc(...arguments);
     return spyCachedInnerTime(spiedFunction, key);
   };
+  Object.defineProperty(spyFunction, "resultFunc", {
+    get: function myProperty() {
+        return this.resultFunc;
+    },
+    set: function(value) {
+        selectorFunc.resultFunc = value;
+    }
+  });
+  spyFunction.__originalSpiedFunction = selectorFunc;
+  return spyFunction;
 };
