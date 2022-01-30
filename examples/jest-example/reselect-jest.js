@@ -45,11 +45,10 @@ describe("reselect performance spying", () => {
     })
 
     it("let override selector for tests", () => {
-        selectorExample.resultFunc = () => "test";
+        const summarySelector = createSelector(() => 100, () => 200, (resA, resB) => resA+resB);
+        const combiner = summarySelector.resultFunc;
 
-        const result = selectorExample();
-
-        expect(selectorExample.__originalSpiedFunction.resultFunc).toEqual(selectorExample.resultFunc);
-        expect(result).toEqual("test");
+        const res = combiner(10, 10);
+        expect(res).toEq(20);
     })
 })
