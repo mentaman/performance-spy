@@ -41,20 +41,12 @@ export const spyCreateSelectorTime = function (originalCreateSelectorFunc: Gener
 };
 
 const spyCachedInnerInnerTime = function (fn: GenericFunction, key: string) {
-  return function () {
+  const spyFunction = function () {
     currentCacheSelectorKey = key;
     const spiedFunction = fn(...arguments);
     currentCacheSelectorKey = null;
     return spiedFunction;
   };
-};
-
-const spyCachedInnerTime = function (fn: GenericFunction, key: string) {
-  const spyFunction = function () {
-    const spiedFunction = fn(...arguments);
-    return spyCachedInnerInnerTime(spiedFunction, key);
-  };
-  
 
   Object.defineProperty(spyFunction, "resultFunc", {
     get: function myProperty() {
@@ -65,6 +57,15 @@ const spyCachedInnerTime = function (fn: GenericFunction, key: string) {
     }
   });
   spyFunction.__originalSpiedFunction = fn;
+
+  return spyFunction
+};
+
+const spyCachedInnerTime = function (fn: GenericFunction, key: string) {
+  const spyFunction = function () {
+    const spiedFunction = fn(...arguments);
+    return spyCachedInnerInnerTime(spiedFunction, key);
+  };
   return spyFunction;
 };
 
