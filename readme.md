@@ -133,3 +133,16 @@ you can also provide data to it, for dynamic measure, to know which id had a slo
     const measureIdStuff = startCustomTimer("suspicious"+id)
     heavyFunction(id)
     measureIdStuff.end()
+
+## Measure only in specific context
+
+* Supported only in nodejs (jest), don't use in browser
+
+By default it'll measure every selector/timer and etc.
+
+You can set it to a specific context, and it'll follow changes only in this particular context
+
+    const summary = await getSummaryFor(() => {
+        selectorExample(1, 3, keyTwo);
+        selectorExample(1, 2, keyTwo);
+    });
