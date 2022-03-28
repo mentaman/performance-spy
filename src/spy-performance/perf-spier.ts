@@ -5,6 +5,7 @@ import { spyCreateSelectorTime, spyCachedCreatorTime } from "./spy-functions/spy
 import { perfStatsReset, getPerfSummary } from "./summary/print-summary";
 import { startCustomTimer } from "./custom-timer/custom-timer";
 import { spyReducerCombiner } from "./spy-functions/spy-reducers";
+import {subscribeAll} from "./callbacks";
 
 declare global {
     interface Window {
@@ -18,7 +19,8 @@ declare global {
     }
 }
 
-export const enableSpying = () => {
+export const enableSpying = (callbacks = {}) => {
+    subscribeAll(callbacks);
     if (typeof window !== "undefined") {
         window.perfStatsReset = perfStatsReset;
         window.getPerfSummary = getPerfSummary;
