@@ -58,4 +58,14 @@ describe("re-reselect performance spying", () => {
 
         expect(summary.mostCalculatedCombiners[0].args.stats['1'].count).toEqual(4);
     })
+
+
+    it("let override selector for tests", () => {
+        selectorExample.resultFunc = () => "test";
+
+        const result = selectorExample();
+
+        expect(selectorExample.__originalSpiedFunction.resultFunc).toEqual(selectorExample.resultFunc);
+        expect(result).toEqual("test");
+    })
 })
