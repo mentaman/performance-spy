@@ -1,4 +1,5 @@
 import { spyFunctionTime } from "./spy-function-time";
+import {callbacks} from "../callbacks";
 
 type GenericFunction = (...args: any[]) => any;
 
@@ -18,7 +19,7 @@ const spySelectorTime = (originalSelectorFunc: GenericFunction) => {
     currentSelectorKey = null;
 
 
-    const spyFunction = spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key);
+    const spyFunction = spyFunctionTime(spiedFunction, (summary) => summary.selectorsPerfStat, key, {observer: callbacks.selector});
     Object.defineProperty(spyFunction, "resultFunc", {
       get: function myProperty() {
           return (spiedFunction as any).resultFunc;

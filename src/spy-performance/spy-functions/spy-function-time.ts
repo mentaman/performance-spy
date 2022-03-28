@@ -1,6 +1,7 @@
 import { getCurrentSummaryForUse } from "../summary/summary-context";
 import { PerfStatsStuff } from "../performance-timer";
 import { Summaries } from "../summary/summaries";
+import {Observer} from "../callbacks";
 
 interface KeepFuncRefs {
   lastReset?: number;
@@ -17,12 +18,14 @@ export const spyFunctionTime = (
     beforeResultsChecker,
     resultsChecker,
     checkArgs = false,
-    keepFuncRefs = {}
+    keepFuncRefs = {},
+    observer,
   }: {
     beforeResultsChecker?: (thisRef: any, args: IArguments) => void;
     resultsChecker?: (thisRef: any, res: any, args: IArguments, perfstat: PerfStatsStuff, key: string) => void;
     checkArgs?: boolean;
     keepFuncRefs?: KeepFuncRefs;
+    observer?: Observer;
   } = {}
 ) => (...args: any) => {
   const currentSummary = getCurrentSummaryForUse();
@@ -41,6 +44,7 @@ export const spyFunctionTime = (
   const res = fn(...args);
   const endTime = performance.now();
   const duration = endTime - startTime;
+  observer?.notify(key, duration);
   perfstat(currentSummary).addDurationStat(key, duration);
 
   if (!keepFuncRefs.count) {
