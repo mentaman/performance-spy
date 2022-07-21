@@ -1,5 +1,6 @@
+import { getCurrentSummaryForUse } from "../summary/summary-context";
 
-type perfStat = {
+export type PerfStat = {
   times: number,
   duration: number,
   "moreThan0.5msTimes": number,
@@ -11,16 +12,6 @@ type perfStat = {
   minDuration: number | null,
   avgTime?: number
 }
-
-let customTimersPerfStat: {[key: string]: perfStat} = {};
-export const resetCustomTimers = () => {
-  customTimersPerfStat = {};
-};
-
-export const getCustomTimers = () => {
-  return customTimersPerfStat;
-};
-
 
 export class CustomSpyFunctionsTimer {
   name: string;
@@ -34,6 +25,8 @@ export class CustomSpyFunctionsTimer {
   }
 
   end() {
+    const { customTimersPerfStat } = getCurrentSummaryForUse();
+
     this.endTime = performance.now();
     this.duration = this.endTime - this.startTime;
     if (!customTimersPerfStat[this.name]) {

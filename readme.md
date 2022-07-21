@@ -1,3 +1,4 @@
+
 # Performance Spy
 
 ## How it works
@@ -5,7 +6,7 @@
 It'll override the implentation of your favorite libraries!
 
 - React ( still WIP )
-- Redux Reducers ( still WIP )
+- Redux Reducers
 - Redux Dispatches
 - Redux Thunk
 - Moment ( not implented yet )
@@ -24,68 +25,80 @@ For example if you have in reselect a function that takes 1 seconds each time, a
 
 ## Install
 
-1.  Install library
-    npm i performance-spy
+Install library
 
-(Not an npm library yet, just a placeholder)
+    npm i performance-spy
 
 ## Setup with webpack
 
-1.  add to webpack.config.js:
+1 - add to webpack.config.js:
 
     alias: {
         /* my aliases */
-        ...require("performance-spy").spyWebpackAliases({
-            "redux-thunk": path.resolve("./node_modules/redux-thunk"),
-            "reselect": path.resolve("./node_modules/reselect"),
-            "re-reselect": path.resolve("./re-reselect-module"),
-        })
+        ...require("performance-spy").spyWebpackAliases(path.resolve("./node_modules"), [
+          "redux-thunk",
+          "re-reselect",
+          "reselect",
+          "redux"
+        ])
     }
 
-    it'll override redux/reselect with performance-spy libraries
+it'll override redux/reselect with performance-spy libraries
 
-2. add to your init.js file, before any usage of one of the libraries
+2 - add to your init.js file, before any usage of one of the libraries
 
     require("performance-spy").enableSpying();
+
+Note that step 2 shouldn't be used in production, it'll have performance impact since all the libraries functions will be used through the library..
+You can allow it though to a specific user in production for research with some condition.
 
 
 ## Setup with jest
 
-1. add to jest.config.js
+See example [Example](https://github.com/mentaman/performance-spy/tree/main/examples/jest-example)
+
+1 - add to jest.config.js
 
     moduleNameMapper: {
         // my name mappers...
-        ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect"])
+        ...spyJesAliases("<rootDir>/node_modules", ["redux-thunk", "re-reselect", "reselect", "redux"])
     }
 
-2. add to jest.init
+2 - add to jest setup
+
     require("performance-spy").enableSpying();
+
+3 - to jest beforeEach
+
+    beforeEach(() => {
+      perfStatsReset();
+    });
 
 ## How to research with it
 
-1. load a page, do some actions
+1 - load a page, do some actions
 
-2. run in f12 console:
+2 - run in f12 console:
 
     getPerfSummary()
 
-3. you'll get a summary of what had happend
+3 - you'll get a summary of what had happend
 
 ## Measure a specific action
 
-1. load a page and prepare to do your action
+1 - load a page and prepare to do your action
 
-2. run in f12 console 
+2 - run in f12 console 
 
     perfStatsReset()
 
-3. do your action
+3 - do your action
 
-4. run in f12 console
+4 - run in f12 console
 
     getPerfSummary
 
-5. you'll see a summary of this action
+5 - you'll see a summary of this action
 
 ## Custom measures
 
@@ -120,5 +133,3 @@ you can also provide data to it, for dynamic measure, to know which id had a slo
     const measureIdStuff = startCustomTimer("suspicious"+id)
     heavyFunction(id)
     measureIdStuff.end()
-
-

@@ -3,25 +3,31 @@ import { spyThunk } from "./spy-functions/spy-thunk";
 import { spyCreateSelectorTime, spyCachedCreatorTime } from "./spy-functions/spy-selector";
 
 import { perfStatsReset, getPerfSummary } from "./summary/print-summary";
-import { startCustomTimer, CustomSpyFunctionsTimer } from "./custom-timer/custom-timer";
+import { startCustomTimer } from "./custom-timer/custom-timer";
+import { spyReducerCombiner } from "./spy-functions/spy-reducers";
+import {subscribeAll} from "./callbacks";
 
 declare global {
     interface Window {
-        perfStatsReset: () => void;
-        getPerfSummary: () => void;
-        spyThunk: (thunk?: any) => any;
-        spyCreateSelectorTime: (createSelector: any) => any;
-        spyCachedCreatorTime: (cachedCreatorTime: any) => any;
-        startCustomTimer: (key: string) => CustomSpyFunctionsTimer
+        perfStatsReset: typeof perfStatsReset;
+        getPerfSummary: typeof getPerfSummary;
+        spyThunk: typeof spyThunk;
+        spyCreateSelectorTime: typeof spyCreateSelectorTime;
+        spyCachedCreatorTime: typeof spyCachedCreatorTime;
+        spyReducerCombiner: typeof spyReducerCombiner;
+        startCustomTimer: typeof startCustomTimer;
     }
 }
-export const enableSpying = () => {
-    if(typeof window !== "undefined") {
+
+export const enableSpying = (callbacks = {}) => {
+    subscribeAll(callbacks);
+    if (typeof window !== "undefined") {
         window.perfStatsReset = perfStatsReset;
         window.getPerfSummary = getPerfSummary;
         window.spyThunk = spyThunk;
         window.spyCreateSelectorTime = spyCreateSelectorTime;
         window.spyCachedCreatorTime = spyCachedCreatorTime;
         window.startCustomTimer = startCustomTimer;
+        window.spyReducerCombiner = spyReducerCombiner;
     }
 }

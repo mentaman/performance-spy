@@ -1,5 +1,5 @@
 declare module 'redux-thunk-original' {
-    
+
 }
 declare module 'reselect-original' {
     export function defaultMemoize(): void;
@@ -11,7 +11,7 @@ declare module "re-reselect-original" {
     export type Resolver<S> = (state: S, ...args: any[]) => number | string;
     export type OutputSelector<S, T> = (state: S, ...args: any[]) => T;
     export type CachedSelector<S, T> = (resolver: Resolver<S>) => OutputSelector<S, T>;
-  
+
     // Two selectors
     export function createCachedSelector<S, R1, R2, T>(
         selectors: [
@@ -20,7 +20,7 @@ declare module "re-reselect-original" {
         ],
         combiner: (res1: R1, res2: R2) => T,
     ): CachedSelector<S, T>;
-  
+
     // Three selectors
     export function createCachedSelector<S, R1, R2, R3, T>(
         selectors: [
@@ -30,7 +30,7 @@ declare module "re-reselect-original" {
         ],
         combiner: (res1: R1, res2: R2, res3: R3) => T,
     ): CachedSelector<S, T>;
-  
+
     // Four selectors
     export function createCachedSelector<S, R1, R2, R3, R4, T>(
         selectors: [
@@ -41,7 +41,7 @@ declare module "re-reselect-original" {
         ],
         combiner: (res1: R1, res2: R2, res3: R3, res4: R4) => T,
     ): CachedSelector<S, T>;
-  
+
     // Five selectors
     export function createCachedSelector<S, R1, R2, R3, R4, R5, T>(
         selectors: [

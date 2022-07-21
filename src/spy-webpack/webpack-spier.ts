@@ -4,12 +4,12 @@ interface Options {
 
 export function spyWebpackAliases(aliases: {[key: string]: string} = {}, options: Options = { silent: true }) {
     const finalAliases: {[key: string]: string} = {};
-    const supported = new Set(["redux-thunk", "reselect", "re-reselect"])
-    for(const [aliasKey, aliasNodeModulePath] of Object.entries(aliases)) {
+    const supported = new Set(["redux-thunk", "reselect", "re-reselect", "redux"])
+    for(const aliasKey of aliases) {
         if(supported.has(aliasKey)) {
-            finalAliases[aliasKey+"-original"] = aliasNodeModulePath;
+            finalAliases[aliasKey+"-original"] = nodemodule+"/"+aliasKey;
+            finalAliases[aliasKey] = nodemodule+"/performance-spy/resolver/"+aliasKey+"-module";
         }
-        finalAliases[aliasKey] = "performance-spy/resolver/"+aliasKey+"-module";
     }
 
     if (!options.silent) {
