@@ -1,4 +1,5 @@
 const { createCachedSelector } = require("re-reselect");
+const { getSummaryFor } = require("performance-spy");
 
 let selectorExample;
 
@@ -57,5 +58,21 @@ describe("re-reselect performance spying", () => {
         const summary = getPerfSummary();
 
         expect(summary.mostCalculatedCombiners[0].args.stats['1'].count).toEqual(4);
+    })
+
+    it("should include only current zone", async () => {
+        const summary1 = await getSummaryFor(() => {
+            selectorExample(1, 2, keyTwo);
+            selectorExample(1, 3, keyTwo);
+        });
+
+        const summary2 = await getSummaryFor(() => {
+            selectorExample(1, 3, keyTwo);
+            selectorExample(1, 2, keyTwo);
+        });
+
+        
+        expect(summary1.mostCalculatedCombiners[0].args.stats['1'].count).toEqual(1);
+        expect(summary2.mostCalculatedCombiners[0].args.stats['1'].count).toEqual(1);
     })
 })
