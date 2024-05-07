@@ -74,4 +74,15 @@ describe("re-reselect performance spying", () => {
     const res = combiner(10, 10);
     expect(res).toEqual(20);
   });
+
+  it("should find its key", () => {
+    selectorExample(1, 2, keyOne);
+
+    const summary = getPerfSummary();
+
+    expect(summary.mostCalculatedCombiners[0].key).toEqual(
+      "(_resA, _resB) => 100"
+    );
+    expect(summary.longestSelectors[0].key).toEqual("(_resA, _resB) => 100");
+  });
 });
